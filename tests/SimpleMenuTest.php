@@ -1,7 +1,6 @@
 <?php
 
 use Iatstuti\SimpleMenu\Manager;
-use Iatstuti\SimpleMenu\Menu;
 use Iatstuti\SimpleMenu\Presenters\UnorderedListPresenter;
 
 class SimpleMenuTest extends PHPUnit_Framework_TestCase
@@ -40,7 +39,7 @@ class SimpleMenuTest extends PHPUnit_Framework_TestCase
         $manager->getMenu('test-menu')->link('Link One', 'http://test.suite/link-one');
         $manager->getMenu('test-menu')->link('Link Two', 'http://test.suite/link-two');
 
-        $this->assertInstanceOf(Menu::class, $manager->getMenu('test-menu'));
+        $this->assertInstanceOf('Iatstuti\SimpleMenu\Menu', $manager->getMenu('test-menu'));
         $this->assertCount(2, $manager->getMenu('test-menu')->items());
         $this->assertSame(0, $manager->getMenu('test-menu')->items()->first()->weight);
         $this->assertSame(0, $manager->getMenu('test-menu')->items()->last()->weight);
@@ -61,7 +60,7 @@ class SimpleMenuTest extends PHPUnit_Framework_TestCase
 
         $submenu = $menu->items()->first();
 
-        $this->assertInstanceOf(Menu::class, $submenu);
+        $this->assertInstanceOf('Iatstuti\SimpleMenu\Menu', $submenu);
         $this->assertCount(2, $submenu->items());
         $this->assertSame('sub-menu', $submenu->label());
         $this->assertSame(0, $submenu->weight);
