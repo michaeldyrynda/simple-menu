@@ -16,30 +16,56 @@ class Menu
 {
 
     /**
+     * Store the menu items.
+     *
      * @var \Illuminate\Support\Collection
      */
     protected $items;
 
     /**
+     * Store the menu label.
+     *
      * @var null|string
      */
     protected $label;
+
+    /**
+     * @var array
+     */
+    private $options;
 
 
     /**
      * Menu constructor.
      *
-     * @param string|null $label
+     * @param  string|null $label
+     * @param  array $options
      */
-    public function __construct($label = null)
+    public function __construct($label = null, array $options = [ ])
     {
-        $this->label = $label;
-        $this->items = new Collection();
+        $this->label   = $label;
+        $this->items   = new Collection();
+        $this->options = array_merge([ 'weight' => 0, ], $options);
     }
 
 
     /**
-     * Get the menu label.
+     * Overload the get method to allow property access of methods.
+     *
+     * @param  string $key
+     *
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        if (method_exists($this, $key)) {
+            return $this->{$key}();
+        }
+    }
+
+
+    /**
+     * Return this menu's label.
      *
      * @return null|string
      */
@@ -58,14 +84,30 @@ class Menu
      *
      * @return $this
      */
-    public function addLink($item, $link, array $options = [ ])
+    public function link($item, $link, array $options = [ ])
     {
-        if (! array_key_exists('weight', $options)) {
-            $options['weight'] = 0;
-        }
+        $this->items()->push(new MenuItem($item, $link, $options));
 
-        $this->items->push(compact('item', 'link', 'options'));
+        return $this->sortItems();
+    }
 
+
+    /**
+     * Return this menu's items.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function items()
+    {
+        return $this->items;
+    }
+
+
+    /**
+     * @return $this
+     */
+    private function sortItems()
+    {
         $this->items = $this->items->sortBy('options.weight');
 
         return $this;
@@ -76,31 +118,35 @@ class Menu
      * Add a new sub menu item to the menu.
      *
      * @param  \Iatstuti\SimpleMenu\Menu $menu
-     * @param  array $options
      *
      * @return $this
      */
-    public function addSubMenu(Menu $menu, array $options = [ ])
+    public function subMenu(Menu $menu)
     {
-        if (! array_key_exists('weight', $options)) {
-            $options['weight'] = 0;
-        }
+        $this->items->push($menu);
 
-        $this->items()->push([ 'item' => $menu, 'options' => $options, ]);
-
-        $this->items = $this->items->sortBy('options.weight');
-
-        return $this;
+        return $this->sortItems();
     }
 
 
     /**
-     * Retrieve the menu items.
+     * Return this menu's options.
      *
-     * @return \Illuminate\Support\Collection
+     * @return array
      */
-    public function items()
+    public function options()
     {
-        return $this->items;
+        return $this->options;
+    }
+
+
+    /**
+     * Return this menu's weight.
+     *
+     * @return int
+     */
+    public function weight()
+    {
+        return $this->options['weight'];
     }
 }
