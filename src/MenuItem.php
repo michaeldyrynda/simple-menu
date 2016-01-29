@@ -2,26 +2,25 @@
 
 namespace Iatstuti\SimpleMenu;
 
+use Iatstuti\SimpleMenu\Traits\ObjectOptions;
+use Iatstuti\Support\Traits\MethodPropertyAccess;
+
 /**
  * POPO object to wrap a menu item.
  *
- * @package    Iatstuti
- * @subpackage SimpleMenu
+ * @package    Iatstuti\SimpleMenu
  * @copyright  2016 IATSTUTI
  * @author     Michael Dyrynda <michael@iatstuti.net>
  */
 class MenuItem
 {
 
+    use MethodPropertyAccess, ObjectOptions;
+
     /**
      * @var string
      */
     protected $label;
-
-    /**
-     * @var array
-     */
-    protected $options;
 
     /**
      * @var string
@@ -40,22 +39,11 @@ class MenuItem
     {
         $this->label   = $label;
         $this->link    = $link;
-        $this->options = array_merge([ 'weight' => 0, ], $options);
-    }
-
-
-    /**
-     * Overload the get method to allow property access of methods.
-     *
-     * @param  string $key
-     *
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        if (method_exists($this, $key)) {
-            return $this->{$key}();
-        }
+        $this->options = array_merge([
+            'active' => false,
+            'class'  => null,
+            'weight' => 0,
+        ], $options);
     }
 
 
@@ -82,23 +70,27 @@ class MenuItem
 
 
     /**
-     * Return this menu item's options.
-     *
-     * @return array
-     */
-    public function options()
-    {
-        return $this->options;
-    }
-
-
-    /**
      * Return this menu item's weight.
      *
      * @return int
      */
     public function weight()
     {
-        return $this->options['weight'];
+        return $this->options('weight');
+    }
+
+
+    /**
+     * Mark this menu item as the currently active one.
+     *
+     * @param  string $class
+     *
+     * @return $this
+     */
+    public function active($class = 'active')
+    {
+        $this->options = array_merge($this->options, [ 'active' => true, 'class' => $class, ]);
+
+        return $this;
     }
 }
