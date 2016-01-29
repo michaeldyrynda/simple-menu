@@ -12,6 +12,9 @@ use Illuminate\Support\Collection;
  * @package    Iatstuti\SimpleMenu
  * @copyright  2016 IATSTUTI
  * @author     Michael Dyrynda <michael@iatstuti.net>
+ *
+ * @property   string $label The menu label
+ * @property   array $options The menu options
  */
 class Menu
 {
@@ -75,7 +78,7 @@ class Menu
      * @param  string $link
      * @param  array $options
      *
-     * @return $this
+     * @return \Iatstuti\SimpleMenu\Menu
      */
     public function link($item, $link, array $options = [ ])
     {
@@ -101,15 +104,15 @@ class Menu
 
 
     /**
-     * @return $this
+     * Sort the menu items by their weight.
+     *
+     * @return void
      */
     private function sortItems()
     {
         $this->items = $this->items->sortBy(function ($item) {
             return $item->weight();
         });
-
-        return $this;
     }
 
 
@@ -118,7 +121,7 @@ class Menu
      *
      * @param  \Iatstuti\SimpleMenu\Menu $menu
      *
-     * @return $this
+     * @return \Iatstuti\SimpleMenu\Menu
      */
     public function subMenu(Menu $menu)
     {

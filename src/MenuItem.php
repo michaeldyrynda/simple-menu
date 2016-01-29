@@ -11,6 +11,9 @@ use Iatstuti\Support\Traits\MethodPropertyAccess;
  * @package    Iatstuti\SimpleMenu
  * @copyright  2016 IATSTUTI
  * @author     Michael Dyrynda <michael@iatstuti.net>
+ *
+ * @property   string $label The menu label
+ * @property   array $options The menu options
  */
 class MenuItem
 {
@@ -26,6 +29,11 @@ class MenuItem
      * @var string
      */
     protected $link;
+
+    /**
+     * @var array
+     */
+    private $options;
 
 
     /**
@@ -85,7 +93,7 @@ class MenuItem
      *
      * @param  string $class
      *
-     * @return $this
+     * @return \Iatstuti\SimpleMenu\MenuItem
      */
     public function active($class = 'active')
     {
