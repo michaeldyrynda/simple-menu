@@ -2,6 +2,7 @@
 
 namespace Iatstuti\SimpleMenu;
 
+use Iatstuti\SimpleMenu\Traits\FetchesWeight;
 use Iatstuti\SimpleMenu\Traits\ObjectOptions;
 use Iatstuti\Support\Traits\MethodPropertyAccess;
 use Illuminate\Support\Collection;
@@ -19,7 +20,7 @@ use Illuminate\Support\Collection;
 class Menu
 {
 
-    use MethodPropertyAccess, ObjectOptions;
+    use MethodPropertyAccess, ObjectOptions, FetchesWeight;
 
     /**
      * Store the menu items.
@@ -111,7 +112,7 @@ class Menu
     private function sortItems()
     {
         $this->items = $this->items->sortBy(function ($item) {
-            return $item->weight();
+            return $item->weight;
         });
     }
 
@@ -130,16 +131,5 @@ class Menu
         $this->sortItems();
 
         return $menu;
-    }
-
-
-    /**
-     * Return this menu's weight.
-     *
-     * @return int
-     */
-    public function weight()
-    {
-        return $this->options('weight');
     }
 }

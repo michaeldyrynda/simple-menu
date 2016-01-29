@@ -2,6 +2,7 @@
 
 namespace Iatstuti\SimpleMenu;
 
+use Iatstuti\SimpleMenu\Traits\FetchesWeight;
 use Iatstuti\SimpleMenu\Traits\ObjectOptions;
 use Iatstuti\Support\Traits\MethodPropertyAccess;
 
@@ -18,7 +19,7 @@ use Iatstuti\Support\Traits\MethodPropertyAccess;
 class MenuItem
 {
 
-    use MethodPropertyAccess, ObjectOptions;
+    use MethodPropertyAccess, ObjectOptions, FetchesWeight;
 
     /**
      * @var string
@@ -74,17 +75,6 @@ class MenuItem
     public function link()
     {
         return $this->link;
-    }
-
-
-    /**
-     * Return this menu item's weight.
-     *
-     * @return int
-     */
-    public function weight()
-    {
-        return $this->options('weight');
     }
 
 
