@@ -3,7 +3,8 @@
     "description": "A simple web application menu management package.",
     "type": "utility",
     "require": {
-        "illuminate/support": "~5.0"
+        "illuminate/support": "~5.0",
+        "iatstuti/support": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.8"

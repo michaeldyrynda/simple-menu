@@ -2,18 +2,21 @@
 
 namespace Iatstuti\SimpleMenu;
 
+use Iatstuti\SimpleMenu\Traits\ObjectOptions;
+use Iatstuti\Support\Traits\MethodPropertyAccess;
 use Illuminate\Support\Collection;
 
 /**
  * POPO object to wrap a menu collection.
  *
- * @package    Iatstuti
- * @subpackage SimpleMenu
+ * @package    Iatstuti\SimpleMenu
  * @copyright  2016 IATSTUTI
  * @author     Michael Dyrynda <michael@iatstuti.net>
  */
 class Menu
 {
+
+    use MethodPropertyAccess, ObjectOptions;
 
     /**
      * Store the menu items.
@@ -28,6 +31,11 @@ class Menu
      * @var null|string
      */
     protected $label;
+
+    /**
+     * @var \Iatstuti\SimpleMenu\Presenters\MenuPresenter
+     */
+    protected $presenter;
 
     /**
      * @var array
@@ -46,21 +54,6 @@ class Menu
         $this->label   = $label;
         $this->items   = new Collection();
         $this->options = array_merge([ 'weight' => 0, ], $options);
-    }
-
-
-    /**
-     * Overload the get method to allow property access of methods.
-     *
-     * @param  string $key
-     *
-     * @return mixed
-     */
-    public function __get($key)
-    {
-        if (method_exists($this, $key)) {
-            return $this->{$key}();
-        }
     }
 
 
@@ -86,9 +79,13 @@ class Menu
      */
     public function link($item, $link, array $options = [ ])
     {
-        $this->items()->push(new MenuItem($item, $link, $options));
+        $item = new MenuItem($item, $link, $options);
 
-        return $this->sortItems();
+        $this->items()->push($item);
+
+        $this->sortItems();
+
+        return $item;
     }
 
 
@@ -108,7 +105,9 @@ class Menu
      */
     private function sortItems()
     {
-        $this->items = $this->items->sortBy('options.weight');
+        $this->items = $this->items->sortBy(function ($item) {
+            return $item->weight();
+        });
 
         return $this;
     }
@@ -125,18 +124,9 @@ class Menu
     {
         $this->items->push($menu);
 
-        return $this->sortItems();
-    }
+        $this->sortItems();
 
-
-    /**
-     * Return this menu's options.
-     *
-     * @return array
-     */
-    public function options()
-    {
-        return $this->options;
+        return $menu;
     }
 
 
@@ -147,6 +137,6 @@ class Menu
      */
     public function weight()
     {
-        return $this->options['weight'];
+        return $this->options('weight');
     }
 }

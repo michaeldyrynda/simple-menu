@@ -2,14 +2,12 @@
 
 namespace Iatstuti\SimpleMenu;
 
-use Iatstuti\SimpleMenu\Manager;
 use Illuminate\Support\ServiceProvider;
 
 /**
  * Laravel service provider for the SimpleMenu package
  *
- * @package    Iatstuti
- * @subpackage SimpleMenu
+ * @package    Iatstuti\SimpleMenu
  * @copyright  2016 IATSTUTI
  * @author     Michael Dyrynda <michael@iatstuti.net>
  */
@@ -23,7 +21,7 @@ class SimpleMenuServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(Manager::class, function () {
+        $this->app->singleton('Iatstuti\SimpleMenu\Manager', function () {
             return new Manager();
         });
     }
