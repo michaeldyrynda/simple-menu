@@ -43,12 +43,13 @@ class Manager
      * Return a new menu item with the given label.
      *
      * @param  string $label
+     * @param  array $options
      *
      * @return \Iatstuti\SimpleMenu\Menu
      */
-    public function create($label)
+    public function create($label, array $options = [ ])
     {
-        return new Menu($label);
+        return new Menu($label, $options);
     }
 
 
