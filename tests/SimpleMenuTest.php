@@ -131,4 +131,38 @@ class SimpleMenuTest extends PHPUnit_Framework_TestCase
         $this->assertSame('active', $menu->items()->first()->options('class'));
         $this->assertSame('<ul><li class="active"><a href="http://test.suite/first-link" title="First link">First link</a></li><li><a href="http://test.suite/second-link" title="Second link">Second link</a></li></ul>', (new UnorderedListPresenter)->render($menu));
     }
+
+
+    /** @test */
+    public function it_can_fluidly_set_a_weights()
+    {
+    	$manager = new Manager();
+
+        $menu = $manager->init('test-menu');
+        $menu->link('First link', 'http://test.suite/first-link')->weight(5);
+        $menu->link('Second link', 'http://test.suite/first-link')->weight(0);
+        $submenu = $manager->create('testing')->weight(2);
+        $menu->subMenu($submenu);
+
+        $this->assertSame(0, $menu->items()->shift()->weight);
+        $this->assertSame(2, $menu->items()->shift()->weight);
+        $this->assertSame(5, $menu->items()->shift()->weight);
+    }
+
+
+    /** @test */
+    public function it_can_set_weight_via_options()
+    {
+        $manager = new Manager();
+
+        $menu = $manager->init('test-menu');
+        $menu->link('First link', 'http://test.suite/first-link', [ 'weight' => 5, ]);
+        $menu->link('Second link', 'http://test.suite/first-link', [ 'weight' => 0, ]);
+        $submenu = $manager->create('testing', [ 'weight' => 2, ]);
+        $menu->subMenu($submenu);
+
+        $this->assertSame(0, $menu->items()->shift()->weight);
+        $this->assertSame(2, $menu->items()->shift()->weight);
+        $this->assertSame(5, $menu->items()->shift()->weight);
+    }
 }
