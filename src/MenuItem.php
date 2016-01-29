@@ -39,8 +39,8 @@ class MenuItem
     /**
      * MenuItem constructor.
      *
-     * @param  $label
-     * @param  $link
+     * @param  string $label
+     * @param  string $link
      * @param  array $options
      */
     public function __construct($label, $link, array $options = [ ])
