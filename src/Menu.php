@@ -37,11 +37,6 @@ class Menu
     protected $label;
 
     /**
-     * @var \Iatstuti\SimpleMenu\Presenters\MenuPresenter
-     */
-    protected $presenter;
-
-    /**
      * @var array
      */
     private $options;
