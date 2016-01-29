@@ -15,7 +15,7 @@ trait ObjectOptions
     /**
      * Return this menu's options, or a single option as specified.
      *
-     * @param  null $key
+     * @param  string|null $key
      *
      * @return array
      */
