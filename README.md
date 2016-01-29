@@ -1,4 +1,4 @@
-# Simple menu manager v1.0.0
+# Simple menu manager v1.2.0
 
 [![Build Status](https://travis-ci.org/deringer/simple-menu.svg?branch=master)](https://travis-ci.org/deringer/simple-menu)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/deringer/simple-menu/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/deringer/simple-menu/?branch=master)
@@ -63,16 +63,12 @@ $menu->link('Active link', 'http://example.com/active-link')->active();
 
 The package ships with a default unordered list presenter.
 
-Should you want to create your own, you may do so by implementing the `Iatstuti\SimpleMenu\Presenters\MenuPresenter` interface, providing a `render` method.
+Should you want to create your own, you may do so by implementing the `Iatstuti\SimpleMenu\Presenters\MenuPresenter` interface, providing a `render` method. The `Menu` object should be provided via the presenter's constructor.
 
 This method ought to iterate over the items in your menu, recursively rendering any objects of type `Menu` and displaying any of type `MenuItem` directly.
 
 ```php
-use Iatstuti\SimpleMenu\Presenters\UnorderedListPresenter;
-
-$presenter = new UnorderedListPresenter;
-
-print $presenter->render($menu);
+print $menu->render();
 ```
 
 ```html
