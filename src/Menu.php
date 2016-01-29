@@ -78,7 +78,7 @@ class Menu
      * @param  string $link
      * @param  array $options
      *
-     * @return \Iatstuti\SimpleMenu\Menu
+     * @return \Iatstuti\SimpleMenu\MenuItem
      */
     public function link($item, $link, array $options = [ ])
     {
