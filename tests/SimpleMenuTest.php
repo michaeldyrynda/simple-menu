@@ -95,7 +95,7 @@ class SimpleMenuTest extends PHPUnit_Framework_TestCase
         $menu->link('Third link', 'http://test.suite/third-link', [ 'weight' => 10, ]);
 
         $this->assertCount(3, $menu->items());
-        $this->assertSame('<ul><li><a href="http://test.suite/third-link" title="Third link">Third link</a></li><li><a href="http://test.suite/first-link" title="First link">First link</a></li><li><a href="http://test.suite/second-link" title="Second link">Second link</a></li></ul>', (new UnorderedListPresenter)->render($menu));
+        $this->assertSame('<ul><li><a href="http://test.suite/third-link" title="Third link">Third link</a></li><li><a href="http://test.suite/first-link" title="First link">First link</a></li><li><a href="http://test.suite/second-link" title="Second link">Second link</a></li></ul>', $menu->render());
     }
 
 
@@ -113,7 +113,7 @@ class SimpleMenuTest extends PHPUnit_Framework_TestCase
         $menu->subMenu($submenu);
 
         $this->assertCount(2, $menu->items());
-        $this->assertSame('<ul><li>First submenu link<ul><li><a href="http://test.suite/first-submenu-link" title="First submenu link">First submenu link</a></li></ul></li><li><a href="http://test.suite/first-link" title="First link">First link</a></li></ul>', (new UnorderedListPresenter)->render($menu));
+        $this->assertSame('<ul><li>First submenu link<ul><li><a href="http://test.suite/first-submenu-link" title="First submenu link">First submenu link</a></li></ul></li><li><a href="http://test.suite/first-link" title="First link">First link</a></li></ul>', $menu->render());
     }
 
 
@@ -129,7 +129,7 @@ class SimpleMenuTest extends PHPUnit_Framework_TestCase
         $this->assertCount(2, $menu->items());
         $this->assertTrue($menu->items()->first()->options('active'));
         $this->assertSame('active', $menu->items()->first()->options('class'));
-        $this->assertSame('<ul><li class="active"><a href="http://test.suite/first-link" title="First link">First link</a></li><li><a href="http://test.suite/second-link" title="Second link">Second link</a></li></ul>', (new UnorderedListPresenter)->render($menu));
+        $this->assertSame('<ul><li class="active"><a href="http://test.suite/first-link" title="First link">First link</a></li><li><a href="http://test.suite/second-link" title="Second link">Second link</a></li></ul>', $menu->render());
     }
 
 

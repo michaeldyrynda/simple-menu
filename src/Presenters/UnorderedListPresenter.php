@@ -16,20 +16,34 @@ class UnorderedListPresenter implements MenuPresenter
 {
 
     /**
-     * Render the given menu as an unordered list.
+     * @var \Iatstuti\SimpleMenu\Menu
+     */
+    protected $menu;
+
+
+    /**
+     * UnorderedListPresenter constructor.
      *
-     * @param  \Iatstuti\SimpleMenu\Menu $menu
+     * @param \Iatstuti\SimpleMenu\Menu $menu
+     */
+    public function __construct(Menu $menu)
+    {
+        $this->menu = $menu;
+    }
+
+    /**
+     * Render the given menu as an unordered list.
      *
      * @return string
      */
-    public function render(Menu $menu)
+    public function render()
     {
         $output  = '<ul>';
 
-        foreach ($menu->items() as $item) {
+        foreach ($this->menu->items() as $item) {
             if ($item instanceof Menu) {
                 // Have a new instance of this presenter render the nested/submenu item
-                $output .= sprintf('<li>%s%s</li>', $item->label, (new static)->render($item));
+                $output .= sprintf('<li>%s%s</li>', $item->label, (new static($item))->render());
             } else if ($item instanceof MenuItem) {
                 // Render the link as-is
                 $output .= sprintf(

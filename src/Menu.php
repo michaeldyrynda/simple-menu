@@ -2,6 +2,8 @@
 
 namespace Iatstuti\SimpleMenu;
 
+use Iatstuti\SimpleMenu\Presenters\MenuPresenter;
+use Iatstuti\SimpleMenu\Presenters\UnorderedListPresenter;
 use Iatstuti\SimpleMenu\Traits\FetchesWeight;
 use Iatstuti\SimpleMenu\Traits\ObjectOptions;
 use Iatstuti\Support\Traits\MethodPropertyAccess;
@@ -35,11 +37,6 @@ class Menu
      * @var null|string
      */
     protected $label;
-
-    /**
-     * @var \Iatstuti\SimpleMenu\Presenters\MenuPresenter
-     */
-    protected $presenter;
 
     /**
      * @var array
@@ -87,8 +84,6 @@ class Menu
 
         $this->items()->push($item);
 
-        $this->sortItems();
-
         return $item;
     }
 
@@ -100,6 +95,8 @@ class Menu
      */
     public function items()
     {
+        $this->sortItems();
+
         return $this->items;
     }
 
@@ -128,8 +125,36 @@ class Menu
     {
         $this->items->push($menu);
 
+        return $menu;
+    }
+
+
+    /**
+     * Render the menu using the given presenter,
+     * or the default UnorderedListPresenter.
+     *
+     * @param  \Iatstuti\SimpleMenu\Presenters\MenuPresenter|null $presenter
+     *
+     * @return string
+     */
+    public function render(MenuPresenter $presenter = null)
+    {
         $this->sortItems();
 
-        return $menu;
+        $presenter = $presenter ?: new UnorderedListPresenter($this);
+
+        return $presenter->render();
+    }
+
+
+    /**
+     * Overload the __toString method to be able to
+     * print this object using the render method.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->render();
     }
 }

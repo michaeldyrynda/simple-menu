@@ -2,8 +2,6 @@
 
 namespace Iatstuti\SimpleMenu\Presenters;
 
-use Iatstuti\SimpleMenu\Menu;
-
 /**
  * Define the interface for a menu presenter.
  *
@@ -17,9 +15,7 @@ interface MenuPresenter
     /**
      * Render the given menu.
      *
-     * @param  \Iatstuti\SimpleMenu\Menu $menu
-     *
-     * @return mixed
+     * @return string
      */
-    public function render(Menu $menu);
+    public function render();
 }
