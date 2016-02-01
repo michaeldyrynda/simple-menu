@@ -133,15 +133,16 @@ class Menu
      * Render the menu using the given presenter,
      * or the default UnorderedListPresenter.
      *
-     * @param  \Iatstuti\SimpleMenu\Presenters\MenuPresenter|null $presenter
+     * @param  string|null $presenter
      *
      * @return string
      */
-    public function render(MenuPresenter $presenter = null)
+    public function render($presenter = null)
     {
         $this->sortItems();
 
-        $presenter = $presenter ?: new UnorderedListPresenter($this);
+        $presenter = $presenter ?: UnorderedListPresenter::class;
+        $presenter = new $presenter($this);
 
         return $presenter->render();
     }
