@@ -67,6 +67,8 @@ Should you want to create your own, you may do so by implementing the `Iatstuti\
 
 This method ought to iterate over the items in your menu, recursively rendering any objects of type `Menu` and displaying any of type `MenuItem` directly.
 
+If you want to use different presenter, pass the class path to the `Menu::render()` method.
+
 ```php
 print $menu->render();
 ```
