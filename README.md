@@ -1,4 +1,4 @@
-# Simple menu manager v1.2.0
+# Simple menu manager v2.0.0
 
 [![Build Status](https://travis-ci.org/deringer/simple-menu.svg?branch=master)](https://travis-ci.org/deringer/simple-menu)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/deringer/simple-menu/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/deringer/simple-menu/?branch=master)
@@ -12,7 +12,7 @@ This package allows you to define multiple menus via a manager, then add links a
 ## Installation
 
 ```
-composer require iatstuti/simple-menu=~1.0
+composer require iatstuti/simple-menu=~2.0
 ```
 
 ## Basic usage
